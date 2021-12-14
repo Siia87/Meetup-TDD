@@ -41,9 +41,8 @@
     ]
   },
   "devDependencies": {
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
-    "enzyme": "^3.11.0",
-    "install": "^0.13.0",
-    "npm": "^8.3.0"
+    "@types/enzyme": "^3.10.10",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
+    "enzyme": "^3.11.0"
   }
 }

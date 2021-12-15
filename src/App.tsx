@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Meetups
+        Happy Meetups &#129325;
       </header>
       <MeetupsStartView meetups={meetupsData} />
 

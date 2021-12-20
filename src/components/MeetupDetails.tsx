@@ -1,17 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Meetups } from '../models/meetups'
+import MeetupComments from '../components/MeetupComments'
 
+interface Props {
+  meetups: Meetups[];
+}
 
-
-function MeetupDetails(props: {
-  meetups: Array<Meetups>
-  // onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  // //state: {value: ''};
-  // comment: string;
-  // setComment: (value: string) => void;
-
-}) {
+function MeetupDetails({ meetups }: Props) {
 
   const { id } = useParams()
 
@@ -25,9 +21,9 @@ function MeetupDetails(props: {
   })
 
   useEffect(() => {
-    props.meetups.map((meetup) => {
+    meetups.map((meetup) => {
       if (meetup.id.toString() === id) {
-        const meet = {
+        const meeting = {
           id: meetup.id,
           title: meetup.title,
           description: meetup.description,
@@ -35,37 +31,24 @@ function MeetupDetails(props: {
           time: meetup.time,
           date: meetup.date
         }
-
-        return setMeetup(meet)
+        return setMeetup(meeting)
       }
     })
   }, [id])
 
   const [comment, setComment] = useState("")
 
-  // const [newComment, setNewComment] = useState([])
+  const [newComment, setNewComment] = useState([])
 
-  // const handleAddClick () =>{
-  //   const add = comment
-  //   console.log(add)
-  // addComment(add)
+  function handleClick() {
+    addComment(comment)
+  }
 
-
-  // const addComment (add) =>{
-  //   setNewComment(add => [
-  //     // { id: Math.random().toString(), value: { comment } },
-  //     ...newComment,
-  //   ])
-  // }
-  // const addTask = task => {
-  //   if (task === '') {
-  //     setAddMode(false)
-  //   } else {
-  //     setNewItem(newItem => [
-  //       { id: Math.random().toString(), value: task },
-  //       ...newItem,
-  //     ])
-  //     setA
+  function addComment(comment: any) {
+    console.log('comment for adding to array', comment)
+    console.log('adding comment to array', newComment)
+    setNewComment(newComment => [...newComment]);
+  }
 
   return (
     <>
@@ -74,10 +57,9 @@ function MeetupDetails(props: {
         <p>Description: {meetup.description}</p>
         <p>Location: {meetup.location}</p>
         <p>Time:{meetup.time} Date: {meetup.date}</p>
-
-        <button data-test="sign-up-btn">
+        {/* <button data-test="sign-up-btn">
           Sign up for event
-        </button>
+        </button> */}
       </section>
       <section>
         Add comment or question:
@@ -85,11 +67,9 @@ function MeetupDetails(props: {
           value={comment}
           onChange={(event) => setComment(event.target.value)}
         ></textarea>
-        <button data-test="addCommentBtn" onClick={() => console.log('addCommentBtn')}>Add comment</button>
-        <ul data-test="listOfComments">
-          <li>{comment}</li>
-        </ul>
+        <button data-test="addCommentBtn" onClick={handleClick}>Add comment</button>
       </section>
+      < MeetupComments comment={newComment} />
     </>
   )
 }

@@ -1,18 +1,14 @@
+import { IComment } from '../models/comments'
 interface Props {
-  comment: Comment[]
+  comment: IComment
 }
 
 function MeetupComments({ comment }: Props) {
 
   return (
     <>
-      {comment.length > 0 && (
-        <ul data-test="listOfComments">
-          <li>hello</li>
-        </ul>
-      )}
+      <div>{comment.message}</div>
 
-      {comment.length === 0 && 'Be the first to comment'}
     </>
   )
 }

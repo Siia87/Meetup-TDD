@@ -1,4 +1,4 @@
-export interface Meetups {
+export interface IMeetups {
   id: number,
   title: string,
   description: string,

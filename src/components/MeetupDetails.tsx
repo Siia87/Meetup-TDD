@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Meetups } from '../models/meetups'
+import { IMeetups } from '../models/meetups'
 import MeetupComments from '../components/MeetupComments'
+import { IComment } from '../models/comments'
 
 interface Props {
-  meetups: Meetups[];
+  meetups: IMeetups[];
 }
 
 function MeetupDetails({ meetups }: Props) {
@@ -36,18 +37,14 @@ function MeetupDetails({ meetups }: Props) {
     })
   }, [id])
 
-  const [comment, setComment] = useState("")
+  const [comment, setComment] = useState<string>("")
 
-  const [newComment, setNewComment] = useState([])
+  const [newComment, setNewComment] = useState<IComment[]>([])
 
-  function handleClick() {
-    addComment(comment)
-  }
-
-  function addComment(comment: any) {
-    console.log('comment for adding to array', comment)
-    console.log('adding comment to array', newComment)
-    setNewComment(newComment => [...newComment]);
+  const addComment = (): void => {
+    const myComment = { message: comment }
+    setNewComment([...newComment, myComment]);
+    setComment("")
   }
 
   return (
@@ -57,9 +54,9 @@ function MeetupDetails({ meetups }: Props) {
         <p>Description: {meetup.description}</p>
         <p>Location: {meetup.location}</p>
         <p>Time:{meetup.time} Date: {meetup.date}</p>
-        {/* <button data-test="sign-up-btn">
+        <button data-test="sign-up-btn">
           Sign up for event
-        </button> */}
+        </button>
       </section>
       <section>
         Add comment or question:
@@ -67,9 +64,14 @@ function MeetupDetails({ meetups }: Props) {
           value={comment}
           onChange={(event) => setComment(event.target.value)}
         ></textarea>
-        <button data-test="addCommentBtn" onClick={handleClick}>Add comment</button>
+        <button data-test="addCommentBtn" onClick={addComment}>Add comment</button>
       </section>
-      < MeetupComments comment={newComment} />
+      <div className="commentsArea" >
+        {newComment.map((comment: IComment, key: number) => {
+          return <MeetupComments key={key} comment={comment} />
+        })}
+      </div>
+
     </>
   )
 }

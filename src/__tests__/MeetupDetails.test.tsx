@@ -27,13 +27,9 @@ describe('Tests for MeetupDetails', () => {
     expect(wrapper.find('button[data-test="addCommentBtn"]').length).toBe(1)
   })
 
-  test('Should not show a list of comments, if no comments are done', () => {
-    const wrapper = mount(<MeetupDetails meetups={meetupData} />)
-    expect(wrapper.find('[data-test="listOfComments"]').length).toBe(0)
-  })
   test('Should add 1 comment when Click on add button', () => {
 
-    const wrapper = shallow(<MeetupDetails meetups={meetupData} />)
+    const wrapper = mount(<MeetupDetails meetups={meetupData} />)
     const btn = wrapper.find('button[data-test="addCommentBtn"]')
 
     btn.simulate('click')
@@ -41,3 +37,8 @@ describe('Tests for MeetupDetails', () => {
     expect(mockAddComment.mock.calls[0][0]).toEqual(comment)
   })
 })
+
+  // test('Should not show a list of comments, if no comments are done', () => {
+  //   const wrapper = mount(<MeetupDetails meetups={meetupData} />)
+  //   expect(wrapper.find('[data-test="listOfComments"]').length).toBe(0)
+  // })

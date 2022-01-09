@@ -1,10 +1,10 @@
-import { Meetups } from '../models/meetups'
+import { IMeetups } from '../models/meetups'
 import { useState } from "react";
 import SearchBar from "./SearchBar"
 import { Link } from 'react-router-dom'
 
 interface Props {
-  meetups: Meetups[];
+  meetups: IMeetups[];
 }
 
 function MeetupsStartView({ meetups }: Props) {

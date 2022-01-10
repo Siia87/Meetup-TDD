@@ -8,7 +8,6 @@ function MeetupComments({ comment }: Props) {
   return (
     <>
       <div>{comment.message}</div>
-
     </>
   )
 }

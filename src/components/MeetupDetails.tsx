@@ -1,11 +1,15 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { IMeetups } from '../models/meetups'
-import MeetupComments from '../components/MeetupComments'
 import { IComment } from '../models/comments'
+import MeetupComments from '../components/MeetupComments'
+import SignUpMeetup from '../components/SignUpMeetup'
+
 
 interface Props {
   meetups: IMeetups[];
+  myName: string
+  myEmail: string
 }
 
 function MeetupDetails({ meetups }: Props) {
@@ -34,17 +38,45 @@ function MeetupDetails({ meetups }: Props) {
         }
         return setMeetup(meeting)
       }
+      return ('No Meetups found')
     })
-  }, [id])
+  }, [id, meetups])
 
   const [comment, setComment] = useState<string>("")
 
   const [newComment, setNewComment] = useState<IComment[]>([])
 
   const addComment = (): void => {
+    console.log('add comment clicked')
     const myComment = { message: comment }
     setNewComment([...newComment, myComment]);
     setComment("")
+  }
+
+  const [showSignup, setShowSignup] = useState(false)
+
+  const [signupName, setSignupName] = useState('')
+  const [signupEmail, setSignupEmail] = useState('')
+
+
+  const signUp = (): void => {
+    setShowSignup(true)
+  }
+  const hideSignUp = (): void => {
+    if (signupName === '') {
+      console.log('You did´t type in your name')
+      return
+    } if (signupEmail === '') {
+
+      console.log('You did´t type in your email')
+      return
+    }
+    else if (signupName !== '' && signupEmail !== '')
+      setShowSignup(false)
+    alert('You are attending the event')
+    setSignupName('')
+    setSignupEmail('')
+
   }
 
   return (
@@ -54,9 +86,18 @@ function MeetupDetails({ meetups }: Props) {
         <p>Description: {meetup.description}</p>
         <p>Location: {meetup.location}</p>
         <p>Time:{meetup.time} Date: {meetup.date}</p>
-        <button data-test="sign-up-btn">
+        {showSignup ?
+          <SignUpMeetup
+            onClick={hideSignUp}
+            myName={signupName}
+            setMyName={setSignupName}
+            myEmail={signupEmail}
+            setMyEmail={setSignupEmail}
+          /> : null}
+        {!showSignup ? <button data-test="sign-up-btn" onClick={signUp}>
           Sign up for event
-        </button>
+        </button> : null}
+
       </section>
       <section>
         Add comment or question:
@@ -64,6 +105,7 @@ function MeetupDetails({ meetups }: Props) {
           value={comment}
           onChange={(event) => setComment(event.target.value)}
         ></textarea>
+
         <button data-test="addCommentBtn" onClick={addComment}>Add comment</button>
       </section>
       <div className="commentsArea" >

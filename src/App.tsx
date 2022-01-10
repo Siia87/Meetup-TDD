@@ -20,7 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MeetupsStartView meetups={meetupsData} />}></Route>
 
-            <Route path="/meetup/:id" element={<MeetupDetails meetups={meetupsData} />}></Route>
+            <Route path="/meetup/:id" element={<MeetupDetails meetups={meetupsData} myName='' myEmail='' />}></Route>
           </Routes>
         </section>
       </Router>

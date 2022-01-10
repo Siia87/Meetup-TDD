@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+
 import { mount } from 'enzyme'
 import { BrowserRouter } from "react-router-dom";
 import MeetupsStartView from '../components/MeetupsStartView'

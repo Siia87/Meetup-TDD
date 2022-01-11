@@ -2,7 +2,7 @@
   text-align: center;
 }
 body {
-  background-color: #95ADAD;
+  background-color: #EDDCD9;
 }
 
 .App-logo {
@@ -17,7 +17,7 @@ body {
 }
 
 .App-header {
-  background-color: #5F7A7A;
+  background-color: #E17CAF;
   min-height: 20vh;
   display: flex;
   flex-direction: column;
@@ -27,8 +27,16 @@ body {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #E99F4C;
+  
+}
+
+button {
+  background-color: #E99F4C;
+  border-radius: 8px;
 }
 
 @keyframes App-logo-spin {

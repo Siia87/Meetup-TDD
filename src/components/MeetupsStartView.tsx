@@ -26,11 +26,11 @@ function MeetupsStartView({ meetups }: Props) {
         <div key={meetup.id} data-test="result-meetup">
           <section>
             <h3 data-test="meetup-title" >Title: {meetup.title}</h3>
-            <p>Description: {meetup.description}</p>
-            <p>Location: {meetup.location}</p>
-            <p>Time:{meetup.time} Date: {meetup.date}</p>
+            <p data-test="meetup-description">Description: {meetup.description}</p>
+            <p data-test="meetup-location">Location: {meetup.location}</p>
+            <p data-test="meetup-time-date">Time:{meetup.time} Date: {meetup.date}</p>
 
-            <Link data-test="Show-MeetupDetails" to={`/meetup/${meetup.id}`} > Show more </Link>
+            <Link data-test="show-MeetupDetails" to={`/meetup/${meetup.id}`} > Show more </Link>
           </section>
         </div>
       ))}

@@ -58,26 +58,26 @@ function MeetupDetails({ meetups }: Props) {
   const [signupName, setSignupName] = useState('')
   const [signupEmail, setSignupEmail] = useState('')
 
+  const [goingToMeetup, setgoingToMeetup] = useState(false)
+
 
   const signUp = (): void => {
     setShowSignup(true)
-  }
-  const hideSignUp = (): void => {
-    if (signupName === '') {
-      console.log('You did´t type in your name')
-      return
-    } if (signupEmail === '') {
 
-      console.log('You did´t type in your email')
+
+  }
+
+  const signedUp = (): void => {
+    if (signupName.match(/[a-z0-9]/) &&
+      signupEmail.match(/[@]/)) {
+      setShowSignup(false)
+      setgoingToMeetup(true)
+      setSignupName('')
+      setSignupEmail('')
       return
     }
-    else if (signupName !== '' && signupEmail !== '')
-      setShowSignup(false)
-    alert('You are attending the event')
-    setSignupName('')
-    setSignupEmail('')
-
   }
+
 
   return (
     <>
@@ -86,9 +86,10 @@ function MeetupDetails({ meetups }: Props) {
         <p>Description: {meetup.description}</p>
         <p>Location: {meetup.location}</p>
         <p>Time:{meetup.time} Date: {meetup.date}</p>
+        {goingToMeetup ? <h3>You are signed up for meetup</h3> : null}
         {showSignup ?
           <SignUpMeetup
-            onClick={hideSignUp}
+            onClick={signedUp}
             myName={signupName}
             setMyName={setSignupName}
             myEmail={signupEmail}
@@ -99,6 +100,7 @@ function MeetupDetails({ meetups }: Props) {
         </button> : null}
 
       </section>
+
       <section>
         Add comment or question:
         <textarea data-test="textfield"

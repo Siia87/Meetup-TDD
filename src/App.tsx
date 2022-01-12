@@ -18,7 +18,11 @@ function App() {
         </header>
         <section className="main-content">
           <Routes>
-            <Route path="/" element={<MeetupsStartView meetups={meetupsData} />}></Route>
+            <Route path="/" element={<MeetupsStartView meetups={meetupsData} title=""
+              description=""
+              date=""
+              time=""
+              location="" />}></Route>
 
             <Route path="/meetup/:id" element={<MeetupDetails meetups={meetupsData} myName='' myEmail='' />}></Route>
           </Routes>

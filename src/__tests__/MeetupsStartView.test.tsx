@@ -25,16 +25,17 @@ describe('Meetup tests', () => {
 
     expect(wrapper.find('p[data-test="meetup-description"]').length).toBe(1)
   })
-  test('Renders a p element for meetup location', () => {
+  // test('Renders a p element for meetup location', () => {
+  //   const wrapper = shallow(<MeetupsStartView meetups={meetupData} />)
+
+  //   expect(wrapper.find('p[data-test="meetup-location"]').length).toBe(1)
+  // })
+  test('Renders a p element for meetup date', () => {
     const wrapper = shallow(<MeetupsStartView meetups={meetupData} />)
 
-    expect(wrapper.find('p[data-test="meetup-location"]').length).toBe(1)
+    expect(wrapper.find('p[data-test="meetup-date"]').length).toBe(1)
   })
-  test('Renders a p element for meetup time and date', () => {
-    const wrapper = shallow(<MeetupsStartView meetups={meetupData} />)
 
-    expect(wrapper.find('p[data-test="meetup-time-date"]').length).toBe(1)
-  })
   test('Check if link "Show more" exists', () => {
     render(<BrowserRouter><MeetupsStartView meetups={meetupData} /></BrowserRouter>)
 

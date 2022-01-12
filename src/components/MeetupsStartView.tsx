@@ -16,10 +16,11 @@ function MeetupsStartView({ meetups }: Props) {
 
   const sortedMeetups = filteredMeetups.sort((a, b) => (a.date).localeCompare(b.date))
 
-  console.log('sorterat: ', sortedMeetups)
+
 
   return (
     <>
+
       <SearchBar searchValue={searchText} setSearchValue={setSearchText} />
 
       {sortedMeetups.map((meetup) => (
@@ -27,8 +28,8 @@ function MeetupsStartView({ meetups }: Props) {
           <section>
             <h3 data-test="meetup-title" >Title: {meetup.title}</h3>
             <p data-test="meetup-description">Description: {meetup.description}</p>
-            <p data-test="meetup-location">Location: {meetup.location}</p>
-            <p data-test="meetup-time-date">Time:{meetup.time} Date: {meetup.date}</p>
+
+            <p data-test="meetup-date"> Date: {meetup.date}</p>
 
             <Link data-test="show-MeetupDetails" to={`/meetup/${meetup.id}`} > Show more </Link>
           </section>

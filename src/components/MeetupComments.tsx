@@ -1,13 +1,17 @@
 import { IComment } from '../models/comments'
 interface Props {
   comment: IComment
+
 }
 
 function MeetupComments({ comment }: Props) {
 
   return (
     <>
-      <div>{comment.message}</div>
+      <div className="comments">
+        {comment.dateTime}
+        {comment.message}
+      </div>
     </>
   )
 }

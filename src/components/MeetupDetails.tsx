@@ -42,31 +42,42 @@ function MeetupDetails({ meetups }: Props) {
     })
   }, [id, meetups])
 
-  const [comment, setComment] = useState<string>("")
 
+  //set date and time for comment
+  const [today, setToday] = useState(new Date())
+  useEffect(() => {
+    setInterval(() => setToday(new Date()), 1000);
+  }, []);
+
+  const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+  const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+  const dateTime = date + ', ' + time;
+
+  //Adding comment on meetup
+  const [comment, setComment] = useState<string>("")
   const [newComment, setNewComment] = useState<IComment[]>([])
 
   const addComment = (): void => {
-    console.log('add comment clicked')
-    const myComment = { message: comment }
-    setNewComment([...newComment, myComment]);
-    setComment("")
+    if (comment !== "") {
+      console.log(dateTime)
+      console.log('add comment clicked')
+      const myComment = { message: comment, dateTime: dateTime }
+      setNewComment([...newComment, myComment]);
+      setComment("")
+    }
   }
+
+  //signingup for meetup
 
   const [showSignup, setShowSignup] = useState(false)
 
-  const [signupName, setSignupName] = useState('')
-  const [signupEmail, setSignupEmail] = useState('')
-
   const [goingToMeetup, setgoingToMeetup] = useState(false)
 
-
-  const signUp = (): void => {
+  const signUpBtn = (): void => {
     setShowSignup(true)
-
-
   }
-
+  const [signupName, setSignupName] = useState('')
+  const [signupEmail, setSignupEmail] = useState('')
   const signedUp = (): void => {
     if (signupName.match(/[a-z0-9]/) &&
       signupEmail.match(/[@]/)) {
@@ -95,27 +106,27 @@ function MeetupDetails({ meetups }: Props) {
             myEmail={signupEmail}
             setMyEmail={setSignupEmail}
           /> : null}
-        {!showSignup ? <button data-test="sign-up-btn" onClick={signUp}>
+        {!showSignup ? <button data-test="sign-up-btn" onClick={signUpBtn}>
           Sign up for event
         </button> : null}
 
       </section>
-
       <section>
-        Add comment or question:
+        {dateTime}
+        <p>Add comment:</p>
         <textarea data-test="textfield"
           value={comment}
           onChange={(event) => setComment(event.target.value)}
         ></textarea>
-
-        <button data-test="addCommentBtn" onClick={addComment}>Add comment</button>
+        <div>
+          <button data-test="addCommentBtn" onClick={addComment}>Add comment</button>
+        </div>
       </section>
       <div className="commentsArea" >
         {newComment.map((comment: IComment, key: number) => {
           return <MeetupComments key={key} comment={comment} />
         })}
       </div>
-
     </>
   )
 }

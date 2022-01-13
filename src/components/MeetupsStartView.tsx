@@ -23,13 +23,16 @@ function MeetupsStartView({ meetups }: Props) {
   )
 
   const myid = nextId()
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [date, setDate] = useState("")
-  const [time, setTime] = useState("")
-  const [location, setLocation] = useState("")
+
+  const [title, setTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>("")
+  const [date, setDate] = useState<string>('')
+  const [time, setTime] = useState<string>('')
+  const [location, setLocation] = useState<string>('')
+  const [errorText, setErrorText] = useState(true)
 
   const sortedMeetups = filteredMeetups.sort((a, b) => (a.date).localeCompare(b.date))
+
 
   const addMeetup = (): void => {
     const myMeetup = {
@@ -40,15 +43,25 @@ function MeetupsStartView({ meetups }: Props) {
       time: time,
       location: location
     }
-    setMeetup([...meetup, myMeetup])
-    console.log('ny meetup:', myMeetup)
-    console.log('alla meetups', meetup)
+    if (
+      title !== '' &&
+      description !== '' &&
+      date !== '' &&
+      time !== '' &&
+      location !== ''
+    ) {
+      setMeetup([...meetup, myMeetup])
+      console.log('ny meetup:', myMeetup)
+      console.log('alla meetups', meetup)
+      setErrorText(true)
+    }
+    else {
+      setErrorText(false)
+    }
   }
 
   return (
     <>
-
-
       <AddNewMeetup
         onClick={addMeetup}
         title={title}
@@ -61,9 +74,12 @@ function MeetupsStartView({ meetups }: Props) {
         setTime={setTime}
         location={location}
         setLocation={setLocation}
+        errorText={errorText}
       />
+      <hr />
       <SearchBar searchValue={searchText} setSearchValue={setSearchText} />
       {sortedMeetups.map((meetup) => (
+
         <div key={meetup.id} data-test="result-meetup">
           <section>
             <h3 data-test="meetup-title" >Title: {meetup.title}</h3>

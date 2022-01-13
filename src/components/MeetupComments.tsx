@@ -9,9 +9,11 @@ function MeetupComments({ comment }: Props) {
   return (
     <>
       <div className="comments">
-        {comment.dateTime}
-        {comment.message}
+        <p>{comment.dateTime}</p>
+        <p>Rating: {comment.newRating}</p>
+        <p>Comment: {comment.message}</p>
       </div>
+      <hr />
     </>
   )
 }

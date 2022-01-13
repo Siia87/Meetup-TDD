@@ -7,13 +7,14 @@ interface Props {
 function SearchBar({ searchValue, setSearchValue }: Props) {
   return (
     <>
-      <label> Search for meetup:</label>
-
-      <input
-        data-test="search-meetup"
-        value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
-      ></input>
+      <div className="searchMeetup">
+        <label> Search for meetup:</label>
+        <input
+          data-test="search-meetup"
+          value={searchValue}
+          onChange={(event) => setSearchValue(event.target.value)}
+        ></input>
+      </div>
     </>
   )
 }

@@ -5,13 +5,6 @@ body {
   background-color: #EDDCD9;
 }
 
-
-/* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-} */
-
 .App-header {
   background-color: #E17CAF;
   min-height: 20vh;
@@ -38,28 +31,28 @@ button {
   margin: 10px 0px;
   cursor: pointer;
 }
+hr {
+  width: 60%;
+  background-color:#666;
+  opacity: 0.5;
+}
 
 .comments {
   margin-top: 10px;
-  max-width: 100px;
-  margin-left: 40%;
+  /* max-width: 100px; */
+  margin-left: 30%;
   margin-right: 30%;
-  text-align: left;
+  text-align: center;
 }
 .new-meetup-form {
+  margin-top: 30px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  align-content: space-between;
-  height: 250px;
-
+  align-content: space-around;
+  
 }
-/* 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
+.searchMeetup{
+  margin-top: 30px;
+}

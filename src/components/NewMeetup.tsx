@@ -10,6 +10,7 @@ interface Props {
   setTime: (time: string) => void
   location: string
   setLocation: (location: string) => void
+  errorText: boolean
 }
 
 const AddNewMeetup = ({
@@ -24,6 +25,7 @@ const AddNewMeetup = ({
   setTime,
   location,
   setLocation,
+  errorText
 }: Props) => {
   return (
     <>
@@ -74,6 +76,7 @@ const AddNewMeetup = ({
           />
         </label>
         <button data-test="newMeetupBtn" onClick={onClick}>Add new meetup</button>
+        {!errorText && <p>You did´nt fill in all the fields</p>}
       </div>
     </>
   )

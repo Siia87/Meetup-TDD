@@ -4,7 +4,7 @@ import MeetupDetails from '../components/MeetupDetails'
 
 const meetupData = [
   {
-    id: 1, title: 'Premier league', description: 'lets talk about football', date: '2022-01-22', time: '19:00', location: 'Nya lundenskolans aula'
+    id: '1', title: 'Premier league', description: 'lets talk about football', date: '2022-01-22', time: '19:00', location: 'Nya lundenskolans aula'
   },
 ]
 
@@ -29,7 +29,7 @@ describe('Tests for MeetupDetails', () => {
     expect(wrapper.find('button[data-test="addCommentBtn"]').length).toBe(1)
   })
 
-  test('Should add 1 comment when Click on add button', () => {
+  test('Should add 1 comment, when Click on add button', () => {
 
     const wrapper = mount(<MeetupDetails meetups={meetupData} myName='' myEmail='' />)
     const btn = wrapper.find('button[data-test="addCommentBtn"]')

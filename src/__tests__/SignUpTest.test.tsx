@@ -4,7 +4,7 @@ import MeetupDetails from '../components/MeetupDetails'
 
 const meetupsData = [
   {
-    id: 1, title: 'Premier league', description: 'lets talk about football', date: '2022-01-22', time: '19:00', location: 'Nya lundenskolans aula'
+    id: '1', title: 'Premier league', description: 'lets talk about football', date: '2022-01-22', time: '19:00', location: 'Nya lundenskolans aula'
   },
 
 ]

@@ -28,47 +28,52 @@ const AddNewMeetup = ({
   return (
     <>
       <div className="new-meetup-form">
-        <label test-data="title">
+        <label >
           Title:{' '}
           <input
+            data-test="newMeetup-Title"
             type="text"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
           />
         </label>
-        <label test-data="description">
+        <label >
           Description:{' '}
           <input
+            data-test="newMeetup-Description"
             type="text"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />
         </label>
-        <label test-data="date">
+        <label >
           Date:{' '}
           <input
-            type="text"
+            data-test="newMeetup-Date"
+            type="date"
             value={date}
             onChange={(event) => setDate(event.target.value)}
           />
         </label>
-        <label test-data="time">
+        <label >
           Time:{' '}
           <input
+            data-test="newMeetup-Time"
             type="text"
             value={time}
             onChange={(event) => setTime(event.target.value)}
           />
         </label>
-        <label test-data="location">
+        <label >
           Location:{' '}
           <input
+            data-test="newMeetup-Location"
             type="text"
             value={location}
             onChange={(event) => setLocation(event.target.value)}
           />
         </label>
-        <button onClick={onClick}>Add new meetup</button>
+        <button data-test="newMeetupBtn" onClick={onClick}>Add new meetup</button>
       </div>
     </>
   )

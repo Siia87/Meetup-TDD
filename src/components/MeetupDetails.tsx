@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Rating } from 'react-simple-star-rating'
+
 import { IMeetups } from '../models/meetups'
 import { IComment } from '../models/comments'
 import MeetupComments from '../components/MeetupComments'
@@ -70,6 +71,7 @@ function MeetupDetails({ meetups }: Props) {
       const myComment = { message: comment, dateTime: dateTime, newRating: myRating }
       setNewComment([...newComment, myComment]);
       setComment("")
+      setMyRating(0)
     }
   }
 
@@ -102,7 +104,7 @@ function MeetupDetails({ meetups }: Props) {
         <h3 data-test="meetup-title" className="meetup-data">Title: {meetup.title}</h3>
         <p>Description: {meetup.description}</p>
         <p>Location: {meetup.location}</p>
-        <p>Time:{meetup.time} Date: {meetup.date}</p>
+        <p>Date: {meetup.date} Time:{meetup.time} </p>
         {goingToMeetup ? <h3>You are signed up for meetup</h3> : null}
         {showSignup ?
           <SignUpMeetup

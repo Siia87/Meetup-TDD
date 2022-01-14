@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { BrowserRouter } from "react-router-dom";
 import MeetupsStartView from '../components/MeetupsStartView'
 
@@ -37,32 +37,37 @@ describe('Meetup tests', () => {
 
     expect(wrapper.find('p[data-test="meetup-description"]').length).not.toBeLessThan(1)
   })
-  // test('Renders a p element for meetup location', () => {
-  //   const wrapper = shallow(<MeetupsStartView meetups={meetupData} />)
-
-  //   expect(wrapper.find('p[data-test="meetup-location"]').length).toBe(1)
-  // })
-  test('Renders a p element for meetup date', () => {
+  test('Renders a p element for meetup location', () => {
     const wrapper = shallow(<MeetupsStartView meetups={meetupData} title=""
       description=""
       date=""
       time=""
       location="" />)
 
-    expect(wrapper.find('p[data-test="meetup-date"]').length).not.toBeLessThan(1)
+    expect(wrapper.find('p[data-test="meetup-location"]').length).not.toBeLessThan(1)
+  })
+  test('Renders a p element for meetup date and time', () => {
+    const wrapper = shallow(<MeetupsStartView meetups={meetupData} title=""
+      description=""
+      date=""
+      time=""
+      location="" />)
+
+    expect(wrapper.find('p[data-test="meetup-date-time"]').length).not.toBeLessThan(1)
   })
 
-  // test('Check if "Show more" exists', () => {
-  //   render(<BrowserRouter><MeetupsStartView meetups={meetupData} title=""
-  //     description=""
-  //     date=""
-  //     time=""
-  //     location="" /></BrowserRouter>)
+  test('Check if "Show more" exists', () => {
+    render(<BrowserRouter><MeetupsStartView meetups={meetupData} title=""
+      description=""
+      date=""
+      time=""
+      location="" /></BrowserRouter>)
 
-  //   const stringValue = (/Show more/i)
-
-  //   expect(stringValue).toBeInTheDocument()
-  // })
+    const stringValue = (/Show more/i)
+    setTimeout(() => {
+      expect(stringValue).toBeInTheDocument()
+    }, (1000))
+  })
 
   test('Check if link "Show more" is a <Link> element', () => {
     const wrapper = shallow(<MeetupsStartView meetups={meetupData} title=""

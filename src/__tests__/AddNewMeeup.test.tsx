@@ -156,7 +156,7 @@ describe('Tests for adding new meetup', () => {
 
     }, 1000)
   })
-  test('Should give errortext, when not all the fields is filled in. When try to add a new meetup', () => {
+  test('Should give errortext, when all fields are not filled. When try to add a new meetup', () => {
     const wrapper = shallow(
       <AddNewMeetup
         onClick={mockNewMeetup}

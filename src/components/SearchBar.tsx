@@ -8,7 +8,7 @@ function SearchBar({ searchValue, setSearchValue }: Props) {
   return (
     <>
       <div className="searchMeetup">
-        <label> Search for meetup:</label>
+        <label> Search for meetup: </label>
         <input
           data-test="search-meetup"
           value={searchValue}

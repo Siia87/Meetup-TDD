@@ -11,7 +11,7 @@ const meetupsData = [
 
 describe('Tests for signing up on meetups', () => {
 
-  test('Should contain a form element', () => {
+  test('Should render a form element', () => {
 
     const wrapper = mount(< MeetupDetails meetups={meetupsData} myName='' myEmail='' />)
 

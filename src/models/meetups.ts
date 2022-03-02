@@ -1,3 +1,4 @@
+import { IComment } from "./comments";
 export interface IMeetups {
   id: string,
   title: string,
@@ -5,4 +6,6 @@ export interface IMeetups {
   location: string,
   date: string //YYYY-mm-dd
   time: string
+  comments: IComment[]
+  attending: number
 }

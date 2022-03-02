@@ -1,17 +1,19 @@
+//import { IComment } from '../models/comments'
 import { IComment } from '../models/comments'
+//import { IMeetups } from '../models/meetups'
 interface Props {
-  comment: IComment
+  meetup: IComment
 
 }
 
-function MeetupComments({ comment }: Props) {
-
+function MeetupComments({ meetup }: Props) {
+  console.log(meetup)
   return (
     <>
       <div className="comments">
-        <p>{comment.dateTime}</p>
-        <p>Rating: {comment.newRating}</p>
-        <p>Comment: {comment.message}</p>
+        <p>{meetup.dateTime}</p>
+        <p>Rating: {meetup.newRating}</p>
+        <p>Comment: {meetup.message}</p>
       </div>
       <hr />
     </>

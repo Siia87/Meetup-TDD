@@ -1,20 +1,20 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Rating } from 'react-simple-star-rating'
-
+import { Link } from 'react-router-dom'
 import { IMeetups } from '../models/meetups'
-import { IComment } from '../models/comments'
 import MeetupComments from '../components/MeetupComments'
 import SignUpMeetup from '../components/SignUpMeetup'
 
 
+
 interface Props {
-  meetups: IMeetups[];
+  meetups: IMeetups[]
   myName: string
   myEmail: string
 }
 
-function MeetupDetails({ meetups }: Props) {
+function MeetupDetails(props: Props) {
 
   const { id } = useParams()
 
@@ -24,11 +24,18 @@ function MeetupDetails({ meetups }: Props) {
     description: '',
     location: '',
     time: '',
-    date: ''
+    date: '',
+    comments: [{
+      message: '',
+      dateTime: '',
+      newRating: 0
+    }],
+    attending: 0
+
   })
 
   useEffect(() => {
-    meetups.map((meetup) => {
+    props.meetups.map((meetup) => {
       if (meetup.id === id) {
         const meeting = {
           id: meetup.id,
@@ -36,13 +43,16 @@ function MeetupDetails({ meetups }: Props) {
           description: meetup.description,
           location: meetup.location,
           time: meetup.time,
-          date: meetup.date
+          date: meetup.date,
+          comments: meetup.comments,
+          attending: meetup.attending
+
         }
         return setMeetup(meeting)
       }
       return ('No Meetups found')
     })
-  }, [id, meetups])
+  }, [id, props.meetups])
 
 
   //set date and time for comment
@@ -56,21 +66,22 @@ function MeetupDetails({ meetups }: Props) {
   const dateTime = date + ', ' + time;
 
   //Adding comment on meetup
-  const [comment, setComment] = useState<string>("")
+  const [myComment, setMyComment] = useState<string>("")
   const [myRating, setMyRating] = useState(0)
-  const [newComment, setNewComment] = useState<IComment[]>([])
 
   const handleRating = (rate: number) => {
     setMyRating(rate)
-
   }
+
   const addComment = (): void => {
-    if (comment !== "" || myRating !== 0) {
-      console.log(dateTime)
-      console.log('add comment clicked')
-      const myComment = { message: comment, dateTime: dateTime, newRating: myRating }
-      setNewComment([...newComment, myComment]);
-      setComment("")
+    if (myComment !== "" || myRating !== 0) {
+
+      const myNewComment = { message: myComment, dateTime: dateTime, newRating: myRating }
+      const id = meetup.id
+      const index = props.meetups.findIndex(item => item.id === id);
+      props.meetups[index].comments.push(myNewComment)
+      localStorage.setItem('meetups', JSON.stringify(props.meetups))
+      setMyComment('')
       setMyRating(0)
     }
   }
@@ -78,7 +89,6 @@ function MeetupDetails({ meetups }: Props) {
   //signingup for meetup
 
   const [showSignup, setShowSignup] = useState(false)
-
   const [goingToMeetup, setgoingToMeetup] = useState(false)
 
   const signUpBtn = (): void => {
@@ -86,9 +96,17 @@ function MeetupDetails({ meetups }: Props) {
   }
   const [signupName, setSignupName] = useState('')
   const [signupEmail, setSignupEmail] = useState('')
+
   const signedUp = (): void => {
     if (signupName.match(/[a-z0-9]/) &&
       signupEmail.match(/[@]/)) {
+      console.log('this meetup: ', meetup)
+      const id = meetup.id
+      const index = props.meetups.findIndex(item => item.id === id);
+      let attend = props.meetups[index].attending
+      attend++
+      props.meetups[index].attending = attend
+      localStorage.setItem('meetups', JSON.stringify(props.meetups))
       setShowSignup(false)
       setgoingToMeetup(true)
       setSignupName('')
@@ -96,7 +114,6 @@ function MeetupDetails({ meetups }: Props) {
       return
     }
   }
-
 
   return (
     <>
@@ -118,13 +135,14 @@ function MeetupDetails({ meetups }: Props) {
           Sign up for event
         </button> : null}
 
+        <p>Attending to this event: {meetup.attending} people</p>
       </section>
       <section>
 
         <p>Add comment:</p>
         <textarea data-test="textfield"
-          value={comment}
-          onChange={(event) => setComment(event.target.value)}
+          value={myComment}
+          onChange={(event) => setMyComment(event.target.value)}
         ></textarea>
         <div>
           <Rating
@@ -138,11 +156,14 @@ function MeetupDetails({ meetups }: Props) {
           <button data-test="addCommentBtn" onClick={addComment}>Add</button>
         </div>
       </section>
-      <div className="commentsArea" >
 
-        {newComment.map((comment: IComment, key: number) => {
-          return <MeetupComments key={key} comment={comment} />
-        })}
+      {meetup.comments.map((comment) => {
+        return <MeetupComments meetup={comment} />
+      })}
+
+
+      <div id='goBackLink'>
+        <Link data-test="go_back" to={`/`}> Go Back </Link>
       </div>
 
     </>

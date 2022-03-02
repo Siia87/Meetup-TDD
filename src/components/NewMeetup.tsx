@@ -10,6 +10,10 @@ interface Props {
   setTime: (time: string) => void
   location: string
   setLocation: (location: string) => void
+  comment: Array<any>
+  setComment: (comment: Array<any>) => void
+  attend: number
+  setAttend: (attend: number) => void
   errorText: boolean
 }
 
@@ -27,6 +31,7 @@ const AddNewMeetup = ({
   setLocation,
   errorText
 }: Props) => {
+
   return (
     <>
       <div className="new-meetup-form">

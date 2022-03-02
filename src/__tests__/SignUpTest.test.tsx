@@ -1,19 +1,36 @@
 import { mount } from 'enzyme'
+import { BrowserRouter } from "react-router-dom";
 import MeetupDetails from '../components/MeetupDetails'
 
 
 const meetupsData = [
   {
-    id: '1', title: 'Premier league', description: 'lets talk about football', date: '2022-01-22', time: '19:00', location: 'Nya lundenskolans aula'
+    id: '1', title: 'Premier league', description: 'lets talk about football', date: '2022-01-22', time: '19:00', location: 'Nya lundenskolans aula', comments: [], attending: 3,
+  },
+  {
+    id: '2',
+    title: 'Bi odling',
+    description: 'lorem ipsum',
+    date: '2022-08-24',
+    time: '13:00',
+    location: 'Stadsbiblioteket',
+    comments: [],
+    attending: 5,
   },
 
 ]
-
+const mockSignUpp = jest.fn()
 describe('Tests for signing up on meetups', () => {
-
+  beforeAll(() => {
+    localStorage.setItem('events', JSON.stringify(meetupsData))
+    window.scrollTo = jest.fn()
+  })
+  afterAll(() => {
+    localStorage.clear()
+  })
   test('Should render a form element', () => {
 
-    const wrapper = mount(< MeetupDetails meetups={meetupsData} myName='' myEmail='' />)
+    const wrapper = mount(<BrowserRouter>< MeetupDetails meetups={meetupsData} myName='' myEmail='' /></BrowserRouter>)
 
     const btn = wrapper.find('button[data-test="sign-up-btn"]')
 
@@ -25,7 +42,7 @@ describe('Tests for signing up on meetups', () => {
 
   })
   test('should render a input field for type in your name', () => {
-    const wrapper = mount(< MeetupDetails meetups={meetupsData} myName='' myEmail='' />)
+    const wrapper = mount(<BrowserRouter>< MeetupDetails meetups={meetupsData} myName='' myEmail='' /></BrowserRouter>)
 
     const btn = wrapper.find('button[data-test="sign-up-btn"]')
 
@@ -37,7 +54,7 @@ describe('Tests for signing up on meetups', () => {
 
   })
   test('should render a input field for type in your email', () => {
-    const wrapper = mount(< MeetupDetails meetups={meetupsData} myName='' myEmail='' />)
+    const wrapper = mount(<BrowserRouter>< MeetupDetails meetups={meetupsData} myName='' myEmail='' /></BrowserRouter>)
 
     const btn = wrapper.find('button[data-test="sign-up-btn"]')
 
@@ -49,7 +66,7 @@ describe('Tests for signing up on meetups', () => {
 
   })
   test('Should render commit button', () => {
-    const wrapper = mount(< MeetupDetails meetups={meetupsData} myName='' myEmail='' />)
+    const wrapper = mount(<BrowserRouter>< MeetupDetails meetups={meetupsData} myName='' myEmail='' /></BrowserRouter>)
 
     const btn = wrapper.find('button[data-test="sign-up-btn"]')
 
@@ -65,7 +82,7 @@ describe('Tests for signing up on meetups', () => {
     const expectedText = 'Enter a valid e-mail address'
     const wrongEmail = 'test.com'
 
-    const wrapper = mount(< MeetupDetails meetups={meetupsData} myName='' myEmail='' />)
+    const wrapper = mount(<BrowserRouter>< MeetupDetails meetups={meetupsData} myName='' myEmail='' /></BrowserRouter>)
 
     const btn = wrapper.find('button[data-test="sign-up-btn"]')
 
@@ -88,7 +105,7 @@ describe('Tests for signing up on meetups', () => {
     const expectedText = 'Enter your name'
 
     const wrongName = 'u'
-    const wrapper = mount(< MeetupDetails meetups={meetupsData} myName='' myEmail='' />)
+    const wrapper = mount(<BrowserRouter>< MeetupDetails meetups={meetupsData} myName='' myEmail='' /></BrowserRouter>)
 
     const btn = wrapper.find('button[data-test="sign-up-btn"]')
 
@@ -108,11 +125,12 @@ describe('Tests for signing up on meetups', () => {
 
 
   test('Submit signup for meetup with correct value in inuptfields, name and email.', () => {
+
+    const wrapper = mount(<BrowserRouter>< MeetupDetails meetups={meetupsData} myName='' myEmail='' /></BrowserRouter>)
+
     const expectedText = 'You are signed up for meetup'
     const correctName = 'Testnamn'
     const correctEmail = 'test@test.com'
-
-    const wrapper = mount(< MeetupDetails meetups={meetupsData} myName='' myEmail='' />)
 
     const btn = wrapper.find('button[data-test="sign-up-btn"]')
 
@@ -128,8 +146,11 @@ describe('Tests for signing up on meetups', () => {
     inputName.simulate('change', { target: { value: correctName } })
 
     wrapper.find('[data-test="commitBtn"]').simulate('click')
+    //expect(mockSignUpp.mock.calls.length).toBe(1)
+    // expect(mockSignUpp.mock.calls[0][0]).toEqual(myComment)
 
     setTimeout(() => {
+
       expect(wrapper.text().includes(expectedText)).toBe(true)
     }, 1000)
   })

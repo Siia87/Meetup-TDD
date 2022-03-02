@@ -1,26 +1,18 @@
 import { IMeetups } from '../models/meetups'
-import { useState } from "react";
+import { IComment } from '../models/comments'
+import { useState, useEffect } from "react";
 import SearchBar from "./SearchBar"
 import { Link } from 'react-router-dom'
-import { meetupsData } from '../data/meetupsData'
 import AddNewMeetup from './NewMeetup'
 import nextId from "react-id-generator";
 
 interface Props {
-  meetups: IMeetups[];
-  title: string
-  description: string
-  date: string
-  time: string
-  location: string
+  meetups: IMeetups[]
 }
 
-function MeetupsStartView({ meetups }: Props) {
-  const [searchText, setSearchText] = useState("");
-  const [meetup, setMeetup] = useState<IMeetups[]>(meetupsData)
-  const filteredMeetups = meetup.filter((meetup) =>
-    meetup.title.match(new RegExp(searchText, "i"))
-  )
+function MeetupsStartView(props: Props) {
+  const [searchText, setSearchText] = useState("")
+  const [filteredMeetups, setFilteredMeetups] = useState(props.meetups)
 
   const myid = nextId()
 
@@ -29,20 +21,34 @@ function MeetupsStartView({ meetups }: Props) {
   const [date, setDate] = useState<string>('')
   const [time, setTime] = useState<string>('')
   const [location, setLocation] = useState<string>('')
+  const [comment, setComment] = useState<IComment[]>([])
+  const [attend, setAttend] = useState<number>(0)
   const [errorText, setErrorText] = useState(true)
 
-  const sortedMeetups = filteredMeetups.sort((a, b) => (a.date).localeCompare(b.date))
+  useEffect(() => {
 
+    let meetups = props.meetups.filter(
+      (item: any) =>
+        item.title.match(new RegExp(searchText, 'i'))
+    )
+
+    const sortedMeetups = meetups.sort((a, b) => (a.date).localeCompare(b.date))
+    setFilteredMeetups(sortedMeetups)
+
+  }, [searchText, props.meetups])
 
   const addMeetup = (): void => {
-    const myMeetup = {
+    let myMeetup = {
       id: myid,
       title: title,
       description: description,
       date: date,
       time: time,
-      location: location
+      location: location,
+      comments: [],
+      attending: 0
     }
+
     if (
       title !== '' &&
       description !== '' &&
@@ -50,15 +56,25 @@ function MeetupsStartView({ meetups }: Props) {
       time !== '' &&
       location !== ''
     ) {
-      setMeetup([...meetup, myMeetup])
-      console.log('ny meetup:', myMeetup)
-      console.log('alla meetups', meetup)
+      props.meetups.push(myMeetup)
+      localStorage.setItem('meetups', JSON.stringify(props.meetups))
+
+      let meetups = props.meetups.filter(
+        (item: any) =>
+          item.title.match(new RegExp(searchText, 'i'))
+      )
+
+      const sortedMeetups = meetups.sort((a, b) => (a.date).localeCompare(b.date))
+      setFilteredMeetups(sortedMeetups)
+
       setErrorText(true)
+
     }
     else {
       setErrorText(false)
     }
   }
+
 
   return (
     <>
@@ -74,12 +90,15 @@ function MeetupsStartView({ meetups }: Props) {
         setTime={setTime}
         location={location}
         setLocation={setLocation}
+        comment={comment}
+        setComment={setComment}
+        attend={attend}
+        setAttend={setAttend}
         errorText={errorText}
       />
       <hr />
       <SearchBar searchValue={searchText} setSearchValue={setSearchText} />
-      {sortedMeetups.map((meetup) => (
-
+      {filteredMeetups.map((meetup) => (
         <div key={meetup.id} data-test="result-meetup">
           <section>
             <h3 data-test="meetup-title" >Title: {meetup.title}</h3>

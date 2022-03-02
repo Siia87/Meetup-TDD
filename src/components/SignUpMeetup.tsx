@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form"
 import { ISignupForm } from "../models/SignupForm"
 
@@ -19,6 +18,7 @@ function SignUpMeetup({ onClick, myName, setMyName, myEmail, setMyEmail }: Props
   } = useForm<ISignupForm>()
 
   const onSubmit = handleSubmit((data) => {
+
     alert(JSON.stringify(data))
   })
 

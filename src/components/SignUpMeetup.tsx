@@ -18,7 +18,6 @@ function SignUpMeetup({ onClick, myName, setMyName, myEmail, setMyEmail }: Props
   } = useForm<ISignupForm>()
 
   const onSubmit = handleSubmit((data) => {
-
     alert(JSON.stringify(data))
   })
 

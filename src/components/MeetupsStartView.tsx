@@ -66,7 +66,6 @@ function MeetupsStartView(props: Props) {
 
       const sortedMeetups = meetups.sort((a, b) => (a.date).localeCompare(b.date))
       setFilteredMeetups(sortedMeetups)
-
       setErrorText(true)
 
     }

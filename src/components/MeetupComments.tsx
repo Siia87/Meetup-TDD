@@ -1,13 +1,10 @@
-//import { IComment } from '../models/comments'
 import { IComment } from '../models/comments'
-//import { IMeetups } from '../models/meetups'
+
 interface Props {
   meetup: IComment
-
 }
 
 function MeetupComments({ meetup }: Props) {
-  console.log(meetup)
   return (
     <>
       <div className="comments">

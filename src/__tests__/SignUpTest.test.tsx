@@ -2,24 +2,18 @@ import { mount } from 'enzyme'
 import { BrowserRouter } from "react-router-dom";
 import MeetupDetails from '../components/MeetupDetails'
 
-
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: () => ({
+    id: '1',
+  }),
+  useRouteMatch: () => ({ url: '/event/1' }),
+}))
 const meetupsData = [
   {
     id: '1', title: 'Premier league', description: 'lets talk about football', date: '2022-01-22', time: '19:00', location: 'Nya lundenskolans aula', comments: [], attending: 3,
-  },
-  {
-    id: '2',
-    title: 'Bi odling',
-    description: 'lorem ipsum',
-    date: '2022-08-24',
-    time: '13:00',
-    location: 'Stadsbiblioteket',
-    comments: [],
-    attending: 5,
-  },
+  }]
 
-]
-const mockSignUpp = jest.fn()
 describe('Tests for signing up on meetups', () => {
   beforeAll(() => {
     localStorage.setItem('events', JSON.stringify(meetupsData))
@@ -146,8 +140,6 @@ describe('Tests for signing up on meetups', () => {
     inputName.simulate('change', { target: { value: correctName } })
 
     wrapper.find('[data-test="commitBtn"]').simulate('click')
-    //expect(mockSignUpp.mock.calls.length).toBe(1)
-    // expect(mockSignUpp.mock.calls[0][0]).toEqual(myComment)
 
     setTimeout(() => {
 
@@ -155,3 +147,4 @@ describe('Tests for signing up on meetups', () => {
     }, 1000)
   })
 })
+

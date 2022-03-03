@@ -6,8 +6,6 @@ import { IMeetups } from '../models/meetups'
 import MeetupComments from '../components/MeetupComments'
 import SignUpMeetup from '../components/SignUpMeetup'
 
-
-
 interface Props {
   meetups: IMeetups[]
   myName: string
@@ -100,7 +98,7 @@ function MeetupDetails(props: Props) {
   const signedUp = (): void => {
     if (signupName.match(/[a-z0-9]/) &&
       signupEmail.match(/[@]/)) {
-      console.log('this meetup: ', meetup)
+
       const id = meetup.id
       const index = props.meetups.findIndex(item => item.id === id);
       let attend = props.meetups[index].attending

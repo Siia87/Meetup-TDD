@@ -5,9 +5,9 @@ import {
 } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { meetupsData } from './data/meetupsData'
-import './App.css';
 import MeetupsStartView from './components/MeetupsStartView';
 import MeetupDetails from './components/MeetupDetails'
+import './App.css';
 
 function App() {
 
